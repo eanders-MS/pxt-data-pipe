@@ -1,0 +1,153 @@
+$page-background-color: #cce2ff;
+//rgb(254, 243, 224);
+$page-font-color: #000;
+
+* {
+  font-family: Share Tech Mono,Monaco,Menlo,Ubuntu Mono,Consolas,source-code-pro,monospace;
+  font-size: 16px;
+  letter-spacing: 1.5px;
+}
+
+body {
+  margin: 20px;
+  padding: 20px;
+  color: $page-font-color;
+  background-color: $page-background-color;
+}
+
+.break {
+  flex-basis: 100%;
+  height: 0;
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.selectable {
+  user-select: text;
+}
+
+.App {
+  user-select: none;
+}
+
+.DivLink {
+  opacity: 0.75;
+  transition: all 0.05s ease;
+
+  &:hover {
+    cursor: pointer;
+    opacity: 1;
+  }
+
+  &:active {
+    // transform: translateY(1px);
+  }
+}
+
+.DivLabel {
+}
+
+.blink {
+  animation: blink-animation 1.5s steps(2, start) infinite;
+}
+
+@keyframes blink-animation {
+  to {
+    visibility: hidden;
+  }
+}
+
+.DivInput {
+  transition: all 0.05s ease;
+  border: solid 3px rgb(68, 72, 87);
+  border-radius: 4px;
+  padding: 8px;
+  height: 18px;
+}
+
+.DivButton {
+  transition: all 0.05s ease;
+  background-color: rgb(68, 72, 87);
+  border: solid 3px rgb(68, 72, 87);
+  border-radius: 4px;
+  padding: 8px;
+  height: 18px;
+
+  &:hover {
+    cursor: pointer;
+    background-color: rgb(90, 95, 115);
+  }
+
+  &:active {
+    transform: translateY(1px);
+  }
+}
+
+.DivActualButton {
+  transition: all 0.05s ease;
+  background-color: rgb(68, 72, 87);
+  border: solid 3px rgb(68, 72, 87);
+  border-radius: 4px;
+  height: 36px;
+  color: #fff;
+
+  &:hover {
+    cursor: pointer;
+    background-color: rgb(90, 95, 115);
+  }
+
+  &:active {
+    transform: translateY(1px);
+  }
+}
+
+.OnAirIcon {
+  transform: translateY(2px);
+}
+
+.center {
+  text-align: center;
+}
+
+.Cameras {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+.Camera {
+  flex-grow: 1;
+}
+
+.Button {
+  background-color: rgb(200, 201, 202);
+  border-color: rgba(0, 0, 0, 0.9);
+  border-top-left-radius:3.2px;
+  border-top-right-radius:3.2px;
+  box-shadow: inset 0 0 0 1px rgba(34,36,38,0), inset 0 -0.3em 0 0 rgba(34,36,38,.15);
+  padding: 8px 12px;
+  outline-width: 0;
+  background-image: linear-gradient(transparent, rgba(0, 0, 0, 0.05));
+
+  &:active {
+    transform: translateY(1px);
+  }
+}
+
+.SourceVideo {
+  border-style: solid;
+  border-color: rgba(0, 0, 0, 0.9);
+  border-width: 1px;
+  //display: none;
+}
+
+.SourceCanvas {
+  border-style: solid;
+  border-color: rgba(0, 0, 0, 0.9);
+  border-width: 1px;
+}
+
+.ColorCubeImage {
+  display: none;
+}

@@ -1,0 +1,80 @@
+{
+	"name": "pxt-data-pipe",
+	"version": "0.1.0",
+	"private": true,
+	"browser": {
+		"fs": false,
+		"uws": false
+	},
+	"bin": {
+		"cpy": "./node_modules/.bin/cpy",
+		"run-s": "./node_modules/.bin/run-s",
+		"run-p": "./node_modules/.bin/run-p",
+		"tsc": "./node_modules/.bin/tsc",
+		"tslint": "./node_modules/.bin/tslint"
+	},
+	"scripts": {
+		"clean": "run-s _clean:0 _clean:1 _clean:2",
+		"_clean:0": "rimraf dist",
+		"_clean:1": "cpy \"manifest.json\" \"./dist/\"",
+		"_clean:2": "cpy \"./**/*\" \"../../dist/assets\" --parents --cwd=\"./src/assets\"",
+		"_build:common": "tsc --build tsconfig.common.json",
+		"prebuild": "run-s clean _build:common",
+		"build:background": "cross-env NODE_ENV=production webpack --config webpack.config.js",
+		"build:popup": "run-s _build:popup:0 _build:popup:1 _build:popup:2",
+		"_build:popup:0": "npm run build --prefix src/popup",
+		"_build:popup:1": "cpy \"./**/*\" \"../../../dist/popup\" --parents --cwd=\"./src/popup/build\"",
+		"_build:popup:2": "run-s _build:popup:copy-sha _build:popup:fixup-newlines",
+		"_build:popup:copy-sha": "cat dist/popup/index.html|grep -shoP 'sha.*?='|xargs -I 'replacement' sed -i -e 's!sha256-placeholder!replacement!' ./dist/manifest.json",
+		"_build:popup:fixup-newlines": "sed -i -e 's/\\r//g' ./dist/manifest.json",
+		"build": "npm-run-all build:*",
+		"prewatch": "run-s clean _build:common",
+		"watch:background": "cross-env NODE_ENV=development webpack --config webpack.config.js -w",
+		"watch:popup": "npm run watch:build --prefix src/popup",
+		"watch": "npm-run-all --parallel watch:*",
+		"zip": "rimraf makecode-data-pipe.zip && cd dist && bestzip ../makecode-data-pipe.zip *",
+		"release": "release-it"
+	},
+	"release-it": {
+		"git": {
+			"commitMessage": "chore: release v${version}"
+		},
+		"github": {
+			"release": true,
+			"assets": [
+				"pxt-data-pipe.zip"
+			]
+		},
+		"npm": {
+			"publish": false
+		}
+	},
+	"devDependencies": {
+		"@types/chrome": "^0.0.88",
+		"@types/node": "^12.7.3",
+		"@types/node-uuid": "^0.0.28",
+		"awesome-typescript-loader": "^5.2.1",
+		"bestzip": "^2.1.4",
+		"cpy-cli": "^2.0.0",
+		"cra-build-watch": "^1.4.1",
+		"cross-env": "^5.2.0",
+		"css-loader": "^3.2.0",
+		"mini-css-extract-plugin": "^0.8.0",
+		"node-sass": "^4.12.0",
+		"npm-run-all": "^4.1.5",
+		"release-it": "^13.5.2",
+		"rimraf": "^3.0.0",
+		"sass-loader": "^7.1.0",
+		"ts-node": "^8.3.0",
+		"tslint": "^5.19.0",
+		"typescript": "3.6.2",
+		"webpack": "4.39.1",
+		"webpack-cli": "^3.3.7"
+	},
+	"dependencies": {
+		"makecode-data-pipe-common": "1.0.0",
+		"node-uuid": "^1.4.8",
+		"redux": "^4.0.4",
+		"webext-redux": "^2.1.2"
+	}
+}

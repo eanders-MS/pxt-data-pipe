@@ -1,0 +1,11 @@
+{
+	"name": "makecode-data-pipe",
+	"private": true,
+	"workspaces": {
+		"packages": [
+			"packages/browser-extension",
+			"packages/browser-extension/common",
+			"packages/browser-extension/src/popup"
+		]
+	}
+}

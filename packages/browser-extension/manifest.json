@@ -1,0 +1,36 @@
+{
+	"manifest_version": 2,
+	"name": "MakeCode Data Pipe",
+	"version": "0.1.0",
+	"permissions": [
+		"videoCapture",
+		"<all_urls>",
+		"tabs"
+	],
+	"content_scripts": [
+		{
+			"js": [
+				"contentscript.js"
+			],
+			"matches": [
+				"<all_urls>"
+			]
+		}
+	],
+	"background": {
+		"scripts": [
+			"background.js"
+		],
+		"persistent": true
+	},
+	"browser_action": {
+		"default_title": "MakeCode Data Pipe"
+	},
+	"icons": {
+		"32": "assets/icon_32_dormant.png"
+	},
+	"web_accessible_resources": [
+		"assets/*"
+	],
+	"content_security_policy": "object-src 'self'; script-src 'self' 'unsafe-eval' 'sha256-placeholder'"
+}

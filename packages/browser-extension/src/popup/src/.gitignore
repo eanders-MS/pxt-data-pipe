@@ -1,0 +1,2 @@
+# `common` folder is symlink'd during `yarn install`
+common/
