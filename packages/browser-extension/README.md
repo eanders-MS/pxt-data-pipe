@@ -17,6 +17,7 @@
 #### Releasing a new production build
 
 To make a production build and publish it to GitHub releases:
+- THIS WILL NOT WORK FROM POWERSHELL. Use cmd + GIT utilities, or bash shell.
 - Open a console to this folder.
 - Make sure you have a GitHub [Personal Access Token](https://github.com/settings/tokens), with "repo" permissions, and assign it to the GITHUB_TOKEN environment variable.
 - Make sure your repo is "clean", no local changes.
