@@ -20,6 +20,7 @@ To make a production build and publish it to GitHub releases:
 - Open a console to this folder.
 - Make sure you have a GitHub [Personal Access Token](https://github.com/settings/tokens), with "repo" permissions, and assign it to the GITHUB_TOKEN environment variable.
 - Make sure your repo is "clean", no local changes.
+- CD to the `packages/browser-extension/ folder.
 - `yarn build` -- builds the project, including the production version of the extension.
 - `yarn zip` -- packages the extension: makecode-data-pipe.zip.
 - `yarn release` -- increments the package version number and publishes to GitHub. This is an interactive process. It will ask how the version should be incremented, etc.
