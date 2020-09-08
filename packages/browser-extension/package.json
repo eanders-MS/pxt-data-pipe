@@ -42,7 +42,7 @@
 		"github": {
 			"release": true,
 			"assets": [
-				"pxt-data-pipe.zip"
+				"makecode-data-pipe.zip"
 			]
 		},
 		"npm": {
