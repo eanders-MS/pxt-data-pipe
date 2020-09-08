@@ -57,7 +57,7 @@ Verify the browser extension is loaded. If you don't need to develop in the exte
 2. In Chrome, look for the extension with the MakeCode icon.
 3. Click the icon. A window should appear enumerating your webcams.
 
-On the Arcade side, video stream funtionality is in located in the `libs/packages/video` package. This package isn't shipped with production Arcade. It exists in the `eanders/video-streams` branch of the different repos the comprise MakeCode, which are:
+On the Arcade side, video stream funtionality is in located in the `libs/video` package. This package isn't shipped with production Arcade. It exists in the `eanders/video-streams` branch of the different repos the comprise MakeCode, which are:
 * https://github.com/microsoft/pxt/ (master branch)
 * https://github.com/microsoft/pxt-common-packages (eanders/video-streams branch)
 * https://github.com/microsoft/pxt-arcade (eanders/video-streams branch)
@@ -81,7 +81,7 @@ On the Arcade side, video stream funtionality is in located in the `libs/package
     * `$> gulp watch`
 
 3. In `pxt-arcade/`: run
-    * `$> pxt service --rebundle`
+    * `$> pxt serve --rebundle`
 
 4. Wait for Arcade to open in the browser.
 
