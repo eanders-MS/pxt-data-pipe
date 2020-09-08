@@ -2,7 +2,7 @@ console.log("MakeCode Data Pipe -- started");
 
 import store from './store';
 import * as TabActions from 'makecode-data-pipe-common/built/actions/tab';
-import { Command } from 'makecode-data-pipe-common/built/commands';
+import * as Commands from 'makecode-data-pipe-common/built/commands';
 
 // id of the settings window, if open
 let settingsWindowId: number = chrome.windows.WINDOW_ID_NONE;
@@ -28,13 +28,22 @@ chrome.windows.onRemoved.addListener(windowId => {
 });
 
 // Handle messages from content scripts and settings page
-chrome.runtime.onMessage.addListener((command: Command, sender: chrome.runtime.MessageSender) => {
+chrome.runtime.onMessage.addListener((command: Commands.Command, sender: chrome.runtime.MessageSender) => {
     dispatchCommand(command, sender);
 });
 
 // Unregister tabs on close
 chrome.tabs.onRemoved.addListener((tabId: number, removeInfo: chrome.tabs.TabRemoveInfo) => {
     unregisterTab(tabId);
+});
+
+chrome.tabs.query({}, tabs => {
+    // This doesn't work due to https://bugs.chromium.org/p/chromium/issues/detail?id=168263
+    // The reloaded extension is blocked from connecting to stale content scripts. ¯\_(ツ)_/¯
+    const msg = Commands.extensionLoaded();
+    for (const tab of tabs) {
+        chrome.tabs.sendMessage(tab.id, msg);
+    }
 });
 
 // Update app state
@@ -49,10 +58,10 @@ function unregisterTab(tabId: number) {
     store.dispatch(TabActions.unregisterTab(tabId));
 }
 
-function dispatchCommand(command: Command, sender: chrome.runtime.MessageSender) {
+function dispatchCommand(command: Commands.Command, sender: chrome.runtime.MessageSender) {
     switch (command.type) {
         case 'video-frame': {
-            handleVideoFrame(command.deviceId, command.frame);
+            handleVideoFrame(command);
             break;
         }
         case 'register-tab': {
@@ -69,17 +78,9 @@ function dispatchCommand(command: Command, sender: chrome.runtime.MessageSender)
     }
 }
 
-function handleVideoFrame(deviceId: string, frame: string) {
+function handleVideoFrame(msg: Commands.VideoFrameCommand) {
     const state = store.getState();
     state.tabs.filter(tab =>
-        tab.cameras.includes(deviceId)).forEach(tab =>
-            sendVideoFrame(tab.tabId, deviceId, frame));
-}
-
-function sendVideoFrame(tabId: number, deviceId: string, frame: string) {
-    chrome.tabs.sendMessage(tabId, {
-        type: 'video-frame',
-        deviceId,
-        frame
-    });
+        tab.cameras.includes(msg.deviceId)).forEach(tab =>
+            chrome.tabs.sendMessage(tab.tabId, msg));
 }

@@ -3,13 +3,13 @@
 	"version": "0.1.0",
 	"private": true,
 	"dependencies": {
+		"makecode-data-pipe-common": "1.0.0",
 		"react": "^16.9.0",
 		"react-dom": "^16.9.0",
 		"react-redux": "^7.1.1",
 		"redux": "^4.0.4",
 		"redux-thunk": "^2.3.0",
-		"webext-redux": "^2.1.2",
-		"makecode-data-pipe-common": "1.0.0"
+		"webext-redux": "^2.1.2"
 	},
 	"devDependencies": {
 		"@types/hoist-non-react-statics": "^3.3.1",
@@ -18,8 +18,9 @@
 		"@types/react": "16.9.2",
 		"@types/react-dom": "16.9.0",
 		"@types/react-redux": "^7.1.2",
-		"customize-cra": "^0.7.0",
+		"@types/webgl2": "^0.0.5",
 		"csp-html-webpack-plugin": "^4.0.0",
+		"customize-cra": "^0.7.0",
 		"hoist-non-react-statics": "^3.3.0",
 		"react-app-rewired": "^2.1.3",
 		"react-scripts": "3.1.1",

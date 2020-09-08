@@ -1,6 +1,6 @@
 # MakeCode Data Pipe
 
-Chrome browser extension to enable streaming of data to the MakeCode simulator's serial port.
+Chrome browser extension to enable streaming of video and data to MakeCode via the `libs/video` common package. To include this package in your Arcade project, add `"video": "*"` to `pxt.json`'s `dependencies` section.
 
 ## Install pre-built extension
 
@@ -31,11 +31,10 @@ Project parts 1 and 2 above are individually webpacked, but are built in a singl
 * Option 1: To make a development build that watches for changes and rebuilds on-the-fly: Run `yarn watch` in `packages/browser-extension` folder.
 * Option 2: To make a production build: Run `yarn build` in `packages/browser-extension` folder.
 
-**Special note**: These projects depend on two shared libraries:
-* `packages/common`
+**Special note**: These projects depend on a shared library:
 * `packages/browser-extension/common`
 
-When running `yarn watch`, code changes in these shared libraries *are not automatically picked up* and must be manually rebuilt by running `yarn build` in the respective folder. Once this is done, the active `yarn watch` process will pick up the changes.
+When running `yarn watch`, code changes in these shared libraries ***are not automatically picked up* and must be manually rebuilt** by running `yarn build` in the respective folder. Once this is done, the active `yarn watch` process will pick up the changes.
 
 ### Installing in Chrome
 

@@ -28,7 +28,8 @@ class App extends React.Component<Props> {
 						});
 						props.dispatch(CameraActions.registerCameras(cameras));
 					});
-			});
+			})
+			.catch(e => console.log(e));
 	}
 	render() {
 		return (

@@ -3,7 +3,6 @@
 	"name": "MakeCode Data Pipe",
 	"version": "0.1.0",
 	"permissions": [
-		"videoCapture",
 		"<all_urls>",
 		"tabs"
 	],

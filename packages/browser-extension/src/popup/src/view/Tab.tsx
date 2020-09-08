@@ -18,7 +18,7 @@ class Tab extends React.Component<Props> {
     render() {
         return (
             <>
-                <div>{this.props.title}</div>
+                <div>{`${this.props.title} (${this.props.tabId})`}</div>
                 {
                     this.props.appState.cameras.map((camera, index) => {
                         return (

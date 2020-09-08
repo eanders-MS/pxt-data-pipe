@@ -24,7 +24,7 @@ export const registerCameras = (cameras: CameraDesc[]): CameraAction => ({
     cameras
 });
 
-export const setCameraState = (deviceId: string, active: boolean): CameraAction => ({
+export const setCameraState = (deviceId: string, name: string, active: boolean): CameraAction => ({
     type: 'set-camera-state',
     deviceId,
     active

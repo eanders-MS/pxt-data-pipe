@@ -1,19 +1,27 @@
 import * as Commands from 'makecode-data-pipe-common/built/commands';
 
-type SimulatorSerialMessage = {
-    type: "serial";
-    id: string;
-    data: string;
-    sim?: boolean;
-    receivedTime?: number;
+type SimulatorMessage = {
+    type: string;
 };
 
-type SimulatorMessage
-    = SimulatorSerialMessage
-    ;
+type SimulatorVideoMessage = SimulatorMessage & {
+    type: 'video';
+    subtype: string;
+};
+
+type SimulatorFrameMessage = SimulatorVideoMessage & {
+    subtype: 'video-frame';
+    deviceId: string;
+    name: string;
+    width: number;
+    height: number;
+    pixels: number[];
+    palette: number[];
+    paletteName: string
+}
 
 window.onload = () => {
-    // Hacky: Allow time for the simulator's iframe to come into existence
+    // Hacky: Allow time for the simulator's iframe to load.
     setTimeout(() => getSimulatorAndUpdateRegistration(), 500);
 }
 
@@ -24,8 +32,12 @@ window.onbeforeunload = () => {
 chrome.runtime.onMessage.addListener((message, sender) => {
     if (message.type && message.type.length) {
         switch (message.type) {
+            case 'extension-loaded': {
+                getSimulatorAndUpdateRegistration();
+                break;
+            }
             case 'video-frame': {
-                handleVideoFrame(message.deviceId, message.frame);
+                handleVideoFrame(message);
                 break;
             }
         }
@@ -50,14 +62,19 @@ function getSimulatorAndUpdateRegistration(): HTMLIFrameElement {
     return simulator as HTMLIFrameElement;
 }
 
-function handleVideoFrame(deviceId: string, frame: string) {
+function handleVideoFrame(videoFrame: Commands.VideoFrameCommand) {
     const simulator = getSimulatorAndUpdateRegistration();
     if (simulator) {
-        console.log("handleVideoFrame");
-        const msg: SimulatorSerialMessage = {
-            type: 'serial',
-            id: Math.random().toFixed(36).substring(2, 10),
-            data: frame
+        const msg: SimulatorFrameMessage = {
+            type: 'video',
+            subtype: 'video-frame',
+            deviceId: videoFrame.deviceId,
+            name: videoFrame.name,
+            width: videoFrame.width,
+            height: videoFrame.height,
+            pixels: videoFrame.pixels,
+            palette: videoFrame.palette,
+            paletteName: videoFrame.paletteName
         };
         simulator.contentWindow.postMessage(msg, '*');
     }
