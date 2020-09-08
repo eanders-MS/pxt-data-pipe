@@ -26,7 +26,7 @@ Run `yarn install` in the repo root to install dependencies for all projects.
 
 ### Building the extension
 
-Project parts 1 and 2 above are individually webpacked, but are built in a single pass.
+The extension consists of multiple projects that get individually webpacked, but all are built in a single pass.
 
 * Option 1: To make a development build that watches for changes and rebuilds on-the-fly: Run `yarn watch` in `packages/browser-extension` folder.
 * Option 2: To make a production build: Run `yarn build` in `packages/browser-extension` folder.
@@ -34,16 +34,20 @@ Project parts 1 and 2 above are individually webpacked, but are built in a singl
 **Special note**: These projects depend on a shared library:
 * `packages/browser-extension/common`
 
-    When running `yarn watch`, code changes in shared libraries ***are not automatically picked up* and must be manually rebuilt**. There are two ways to do this:
+When running `yarn watch`, code changes in shared libraries ***are not automatically picked up* and must be manually rebuilt**. There are two ways to do this:
         
-    1. Stop and restart `yarn watch`.
-    2. By running `yarn build` in the shared lib folder. Once this is done, the active `yarn watch` process will pick up the changes.
+1. Stop and restart `yarn watch`.
+2. Run `yarn build` in the shared lib folder. Once this is done, the active `yarn watch` process will pick up the changes.
 
-### Installing in Chrome
+### Installing local build in Chrome
 
 1. In Chrome, open the extension management page by navigating to `chrome://extensions`.
 2. Enable developer mode if necessary by clicking the toggle switch next to **Developer mode**.
 3. Click the **LOAD UNPACKED** button and select the `packages/browser-extension/dist` folder.
+
+**Note**: Whenever the extension is rebuilt, it must be reloaded in Chrome via the "reload" button.
+
+**Note**: Whenever the extension is reloaded, its connection to existing MakeCode tabs is broken. This is a feature/limitation of Chrome with no straightforward workaround. Refresh these pages to reconnect them to the extension.
 
 ## Connecting to Arcade
 
